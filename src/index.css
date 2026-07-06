@@ -105,17 +105,29 @@ body {
   background-position: right center;
 }
 .row__val {
-  margin-left: auto;
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   font-size: 25px;
+  color: var(--tinta);
   text-align: right;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding: 0;
 }
-.row--to .row__val {
-  color: var(--azul);
+.row__val::placeholder {
+  color: rgba(15, 27, 46, 0.28);
+}
+.row--active {
+  box-shadow: 0 0 0 2px var(--oro), 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+.tip {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.6);
 }
 .copy {
   margin-left: 8px;
@@ -135,8 +147,8 @@ body {
 .swap {
   position: absolute;
   top: 50%;
-  right: 22px;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -150,7 +162,7 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 .swap:active {
-  transform: translateY(-50%) scale(0.94);
+  transform: translate(-50%, -50%) scale(0.94);
 }
 
 /* ---------- Reference ---------- */

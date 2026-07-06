@@ -1,0 +1,10 @@
+# Configuración de publicación en Netlify — Convertidor Insamco
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# App de una sola página: cualquier ruta cae en index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
