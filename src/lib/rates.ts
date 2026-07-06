@@ -9,6 +9,10 @@ export type Code = "USD" | "USDT" | "COP" | "VES";
 // Ajustable — Fase 2b: lo fijará Sergio viendo el cartel de William.
 export const MARGEN = 0.04;
 
+// En la frontera el USDT vale MENOS que el dólar en efectivo (billete físico es
+// premium). Hoy: USDT ~3.250 vs dólar cash ~3.480 → descuento ~2,5% sobre el TRM.
+export const DESC_USDT = 0.025;
+
 // Bolívar por dólar (paralelo). Fase 2b: en vivo.
 export const VES_PER_USD = 744.53;
 
@@ -17,15 +21,19 @@ export const TRM_FALLBACK = 3334.93;
 
 export const ORDER: Code[] = ["COP", "VES", "USD", "USDT"];
 
+// Valor de cada moneda EN PESOS (COP), calculado desde el TRM en vivo.
+// Usar el peso como base permite que el USDT valga distinto al dólar cash.
 export function buildCur(
   trm: number
-): Record<Code, { label: string; name: string; perUSD: number }> {
-  const cucuta = Math.round(trm * (1 + MARGEN) * 100) / 100; // Dólar Cúcuta
+): Record<Code, { label: string; name: string; cop: number }> {
+  const usd = Math.round(trm * (1 + MARGEN) * 100) / 100; // Dólar Cúcuta (efectivo)
+  const usdt = Math.round(trm * (1 - DESC_USDT) * 100) / 100; // USDT (más barato)
+  const ves = Math.round((usd / VES_PER_USD) * 100) / 100; // COP por bolívar
   return {
-    USD: { label: "USD", name: "Dólar", perUSD: 1 },
-    USDT: { label: "USDT", name: "USDT", perUSD: 1 },
-    COP: { label: "COP", name: "Peso colombiano", perUSD: cucuta },
-    VES: { label: "Bs", name: "Bolívar", perUSD: VES_PER_USD },
+    COP: { label: "COP", name: "Peso colombiano", cop: 1 },
+    USD: { label: "USD", name: "Dólar", cop: usd },
+    USDT: { label: "USDT", name: "USDT", cop: usdt },
+    VES: { label: "Bs", name: "Bolívar", cop: ves },
   };
 }
 
@@ -67,8 +75,7 @@ export function convert(
   amount: number,
   from: Code,
   to: Code,
-  cur: Record<Code, { perUSD: number }>
+  cur: Record<Code, { cop: number }>
 ) {
-  const usd = amount / cur[from].perUSD;
-  return usd * cur[to].perUSD;
+  return (amount * cur[from].cop) / cur[to].cop;
 }

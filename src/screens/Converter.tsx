@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ORDER, MARGEN, TRM_FALLBACK, buildCur, convert, fetchTrm, type Code } from "../lib/rates";
+import { ORDER, TRM_FALLBACK, buildCur, convert, fetchTrm, type Code } from "../lib/rates";
 
 const nf = new Intl.NumberFormat("es-CO", {
   minimumFractionDigits: 2,
@@ -147,10 +147,10 @@ export default function Converter() {
 
       <div className="ref">
         <span>
-          <span className="ref__star">★ Dólar Cúcuta</span> · 1 USD = {nf.format(cur.COP.perUSD)} COP
+          <span className="ref__star">★ Dólar Cúcuta</span> {nf.format(cur.USD.cop)} · USDT {nf.format(cur.USDT.cop)} COP
         </span>
         <span className="ref__trm">
-          {trmInfo.live ? "🟢 en vivo · " : ""}TRM oficial {nf.format(trm)} (banrep {trmInfo.date}) + {Math.round(MARGEN * 100)}% frontera
+          {trmInfo.live ? "🟢 en vivo · " : ""}TRM oficial {nf.format(trm)} (banrep {trmInfo.date})
         </span>
       </div>
 
