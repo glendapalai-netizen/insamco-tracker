@@ -1,4 +1,4 @@
-import { WHATSAPP, EMAIL, DIRECCION, MAPS_URL } from "../lib/rates";
+import { WHATSAPP, EMAIL_SERGIO, EMAIL_ANDREA, DIRECCION, MAPS_URL } from "../lib/rates";
 
 const PRODUCTOS = [
   "Dióxido de titanio",
@@ -36,18 +36,18 @@ export default function Tarjeta() {
 
       <section className="block">
         <h2 className="block__title">Contáctanos</h2>
-        <a className="line line--wa" href={COTIZAR} target="_blank" rel="noreferrer">
-          <span className="line__ico">💬</span>
-          <span>
-            <b>Cotizar por WhatsApp</b>
-            <small>+57 350 717 4992</small>
-          </span>
-        </a>
-        <a className="line" href={`mailto:${EMAIL}`}>
+        <a className="line" href={`mailto:${EMAIL_SERGIO}`}>
           <span className="line__ico">✉️</span>
           <span>
-            <b>Escríbenos un correo</b>
-            <small>{EMAIL}</small>
+            <b>Sergio</b>
+            <small>{EMAIL_SERGIO}</small>
+          </span>
+        </a>
+        <a className="line" href={`mailto:${EMAIL_ANDREA}`}>
+          <span className="line__ico">✉️</span>
+          <span>
+            <b>Andrea Osorio</b>
+            <small>{EMAIL_ANDREA}</small>
           </span>
         </a>
         <a className="line" href={MAPS_URL} target="_blank" rel="noreferrer">
@@ -65,6 +65,11 @@ export default function Tarjeta() {
       </section>
 
       <p className="foot">Grupo Insamco S.A.S. · Cúcuta, Colombia · sin publicidad</p>
+
+      {/* Burbuja flotante de WhatsApp — discreta, solo en esta pantalla */}
+      <a className="wa-fab" href={COTIZAR} target="_blank" rel="noreferrer" aria-label="Cotizar por WhatsApp" title="Cotizar por WhatsApp">
+        <span>💬</span>
+      </a>
     </div>
   );
 }

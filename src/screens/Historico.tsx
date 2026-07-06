@@ -22,6 +22,17 @@ const DATA: Record<Range, { cucuta: number[]; trm: number[]; labels: string[] }>
   },
 };
 
+// Historial diario (muestra) — Bolívar por dólar (VES/USD), estilo BHG.
+const DAILY: { date: string; value: number }[] = [
+  { date: "06/07/2026", value: 744.53 },
+  { date: "05/07/2026", value: 741.1 },
+  { date: "04/07/2026", value: 739.2 },
+  { date: "03/07/2026", value: 733.8 },
+  { date: "02/07/2026", value: 728.4 },
+  { date: "01/07/2026", value: 724.07 },
+  { date: "30/06/2026", value: 720.82 },
+];
+
 function path(vals: number[], min: number, max: number, w: number, h: number) {
   const n = vals.length;
   const span = max - min || 1;
@@ -81,6 +92,19 @@ export default function Historico() {
         <span className="legend__i">
           <i className="dot dot--white" /> TRM oficial · {fmt(d.trm[d.trm.length - 1])}
         </span>
+      </div>
+
+      <div className="hist-list">
+        <div className="hist-head">Historial diario · Bolívar (VES / USD)</div>
+        {DAILY.map((row) => (
+          <div key={row.date} className="hist-row">
+            <div className="hist-date">
+              {row.date}
+              <small>VES / USD</small>
+            </div>
+            <div className="hist-val">{fmt(row.value)}</div>
+          </div>
+        ))}
       </div>
 
       <p className="note">Datos de muestra — en vivo próximamente.</p>

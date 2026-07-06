@@ -1,12 +1,19 @@
 import { useState } from "react";
-import { CUR, ORDER, TRM, WHATSAPP, convert, type Code } from "../lib/rates";
+import { CUR, ORDER, TRM, convert, type Code } from "../lib/rates";
 
 const nf = new Intl.NumberFormat("es-CO", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
 
-// Agrupa miles con punto, respetando lo que la persona va escribiendo (coma = decimal).
+// Líneas de tendencia (muestra) — una moneda, un color CMYK.
+const TREND: { label: string; color: string; pts: string }[] = [
+  { label: "Peso", color: "#22D3EE", pts: "0,42 43,40 86,44 129,37 171,34 214,31 257,27 300,22" }, // Cian
+  { label: "Bolívar", color: "#F45DBE", pts: "0,47 43,45 86,41 129,43 171,37 214,34 257,31 300,27" }, // Magenta
+  { label: "Dólar", color: "#E2C144", pts: "0,50 43,49 86,50 129,48 171,49 214,47 257,48 300,45" }, // Amarillo
+  { label: "USDT", color: "#E6EDF3", pts: "0,53 43,51 86,53 129,50 171,51 214,49 257,50 300,46" }, // Key (claro)
+];
+
 function group(raw: string): string {
   if (raw === "") return "";
   const [int, dec] = raw.split(",");
@@ -20,7 +27,6 @@ function numToRaw(n: number): string {
   if (!Number.isFinite(n) || n === 0) return "";
   return String(Math.round(n * 100) / 100).replace(".", ",");
 }
-// Deja solo dígitos y una coma, máximo 2 decimales.
 function sanitize(input: string): string {
   let s = input.replace(/\./g, "").replace(/[^\d,]/g, "");
   const i = s.indexOf(",");
@@ -127,9 +133,22 @@ export default function Converter() {
 
       <p className="tip">Toca cualquier cifra para escribirla · Toca ⧉ para copiar y pegar en tu banco</p>
 
-      <a className="wa" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noreferrer">
-        <span>💬</span> Escríbenos por WhatsApp
-      </a>
+      <div className="trend">
+        <svg className="trend__svg" viewBox="0 0 300 64" preserveAspectRatio="none" aria-hidden="true">
+          {TREND.map((t) => (
+            <polyline key={t.label} points={t.pts} fill="none" stroke={t.color} strokeWidth="2.5" />
+          ))}
+        </svg>
+        <div className="trend__legend">
+          {TREND.map((t) => (
+            <span key={t.label} className="trend__item">
+              <i className="trend__dot" style={{ background: t.color }} />
+              {t.label}
+            </span>
+          ))}
+        </div>
+        <div className="trend__cap">Tendencia comparada · muestra</div>
+      </div>
 
       {copied && <div className="toast">Copiado ✓</div>}
     </>

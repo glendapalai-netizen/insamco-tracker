@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./screens.css";
+import "./extra.css";
 import Splash from "./screens/Splash";
 import Converter from "./screens/Converter";
 import Historico from "./screens/Historico";
