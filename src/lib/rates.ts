@@ -15,7 +15,7 @@ export const VES_PER_USD = 744.53;
 // TRM de respaldo si no hay internet (real 04–06 jul, banrep.gov.co).
 export const TRM_FALLBACK = 3334.93;
 
-export const ORDER: Code[] = ["USD", "COP", "VES", "USDT"];
+export const ORDER: Code[] = ["COP", "VES", "USD", "USDT"];
 
 export function buildCur(
   trm: number

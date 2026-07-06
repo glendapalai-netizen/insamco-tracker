@@ -42,10 +42,10 @@ export default function Converter() {
     live: false,
   });
 
-  const [from, setFrom] = useState<Code>("USD");
-  const [to, setTo] = useState<Code>("COP");
+  const [from, setFrom] = useState<Code>("COP");
+  const [to, setTo] = useState<Code>("VES");
   const [editField, setEditField] = useState<"from" | "to">("from");
-  const [raw, setRaw] = useState("1");
+  const [raw, setRaw] = useState("");
   const [copied, setCopied] = useState(false);
 
   // Jala el TRM oficial en vivo al abrir.
@@ -67,8 +67,8 @@ export default function Converter() {
   const fromNum = editField === "from" ? value : convert(value, to, from, cur);
   const toNum = editField === "to" ? value : convert(value, from, to, cur);
 
-  const fromDisplay = editField === "from" ? group(raw) : nf.format(fromNum);
-  const toDisplay = editField === "to" ? group(raw) : nf.format(toNum);
+  const fromDisplay = editField === "from" ? group(raw) : fromNum ? nf.format(fromNum) : "";
+  const toDisplay = editField === "to" ? group(raw) : toNum ? nf.format(toNum) : "";
 
   const focusField = (field: "from" | "to", num: number) => {
     setEditField(field);
