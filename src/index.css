@@ -1,0 +1,283 @@
+:root {
+  --azul: #1a365d;
+  --azul-hondo: #0f2340;
+  --azul-medio: #152a4a;
+  --oro: #e2c144;
+  --oro-suave: #f0d8a8;
+  --claro: #f7fafc;
+  --tinta: #0f1b2e;
+  --gris: #64748b;
+  --radio: 18px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  font-family: "Open Sans", system-ui, -apple-system, sans-serif;
+  background: linear-gradient(160deg, var(--azul) 0%, var(--azul-hondo) 100%);
+  color: var(--claro);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 26px 16px 34px;
+}
+.shell {
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ---------- Header ---------- */
+.brand {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.brand__logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
+}
+.brand__name {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--oro);
+  font-size: 15px;
+}
+.brand__sub {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Converter card ---------- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--claro);
+  color: var(--tinta);
+  border-radius: var(--radio);
+  padding: 15px 18px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+.row__cur {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background: transparent;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--tinta);
+  padding-right: 20px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%230F1B2E' d='M2 2h8L6 7z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.row__val {
+  margin-left: auto;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.row--to .row__val {
+  color: var(--azul);
+}
+.copy {
+  margin-left: 8px;
+  border: none;
+  background: var(--oro);
+  color: var(--azul-hondo);
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  font-size: 17px;
+  cursor: pointer;
+  flex: none;
+}
+.copy:active {
+  transform: scale(0.94);
+}
+.swap {
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid var(--azul-hondo);
+  background: var(--oro);
+  color: var(--azul-hondo);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.swap:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+/* ---------- Reference ---------- */
+.ref {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.ref__star {
+  color: var(--oro);
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+}
+.ref__trm {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+}
+
+/* ---------- Sparkline ---------- */
+.spark-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.spark {
+  width: 100%;
+  height: 62px;
+  display: block;
+}
+.spark-cap {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Keypad ---------- */
+.pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 10px;
+}
+.key {
+  border: none;
+  border-radius: 14px;
+  padding: 15px 0;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  transition: background 0.12s, transform 0.05s;
+}
+.key:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.97);
+}
+.key--ghost {
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.key--gold {
+  background: var(--oro);
+  color: var(--azul-hondo);
+  font-size: 16px;
+  font-weight: 800;
+}
+.key--gold:active {
+  background: var(--oro-suave);
+}
+
+/* ---------- WhatsApp + footer ---------- */
+.wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  background: #25d366;
+  color: #08351b;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px;
+  border-radius: 14px;
+  margin-top: 2px;
+}
+.foot {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  background: var(--oro);
+  color: var(--azul-hondo);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  animation: pop 0.2s ease;
+  z-index: 5;
+}
+@keyframes pop {
+  from {
+    transform: translate(-50%, 8px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}

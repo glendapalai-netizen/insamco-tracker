@@ -1,0 +1,212 @@
+/* Espacio para que el contenido no quede bajo la barra de navegación */
+.shell {
+  padding-bottom: 88px;
+}
+
+/* ---------- Bottom nav ---------- */
+.nav {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 462px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(15, 35, 64, 0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(226, 193, 68, 0.18);
+  z-index: 10;
+}
+.nav__i {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+.nav__ico {
+  font-size: 18px;
+  line-height: 1;
+}
+.nav__i.is-on {
+  color: var(--oro);
+  background: rgba(226, 193, 68, 0.1);
+}
+
+/* ---------- Generic screen ---------- */
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.screen__head {
+  text-align: center;
+  margin-top: 6px;
+}
+.screen__title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  color: #fff;
+}
+.screen__sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 2px;
+}
+
+/* ---------- Histórico ---------- */
+.range {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.range__b {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.range__b.is-on {
+  background: var(--oro);
+  color: var(--azul-hondo);
+  border-color: var(--oro);
+}
+.chart {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radio);
+  padding: 16px 14px 10px;
+}
+.chart__svg {
+  width: 100%;
+  height: 160px;
+  display: block;
+}
+.chart__x {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radio);
+  padding: 14px 16px;
+}
+.legend__i {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+.dot {
+  width: 12px;
+  height: 4px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.dot--gold {
+  background: var(--oro);
+}
+.dot--white {
+  background: rgba(255, 255, 255, 0.6);
+}
+.note {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Tarjeta ---------- */
+.tagline {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 4px;
+  text-align: center;
+}
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.block__title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--oro);
+  text-transform: uppercase;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(226, 193, 68, 0.25);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+.line {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  background: var(--claro);
+  color: var(--tinta);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+.line--wa {
+  background: #25d366;
+  color: #08351b;
+}
+.line__ico {
+  font-size: 22px;
+  flex: none;
+}
+.line b {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  display: block;
+}
+.line small {
+  font-size: 12px;
+  opacity: 0.75;
+}
+.video {
+  width: 100%;
+  border-radius: var(--radio);
+  background: #000;
+  display: block;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
