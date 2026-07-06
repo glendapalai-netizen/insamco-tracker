@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { CUR, ORDER, TRM, convert, type Code } from "../lib/rates";
+import { useEffect, useMemo, useState } from "react";
+import { ORDER, MARGEN, TRM_FALLBACK, buildCur, convert, fetchTrm, type Code } from "../lib/rates";
 
 const nf = new Intl.NumberFormat("es-CO", {
   minimumFractionDigits: 2,
@@ -8,10 +8,10 @@ const nf = new Intl.NumberFormat("es-CO", {
 
 // Líneas de tendencia (muestra) — una moneda, un color CMYK.
 const TREND: { label: string; color: string; pts: string }[] = [
-  { label: "Peso", color: "#22D3EE", pts: "0,42 43,40 86,44 129,37 171,34 214,31 257,27 300,22" }, // Cian
-  { label: "Bolívar", color: "#F45DBE", pts: "0,47 43,45 86,41 129,43 171,37 214,34 257,31 300,27" }, // Magenta
-  { label: "Dólar", color: "#E2C144", pts: "0,50 43,49 86,50 129,48 171,49 214,47 257,48 300,45" }, // Amarillo
-  { label: "USDT", color: "#E6EDF3", pts: "0,53 43,51 86,53 129,50 171,51 214,49 257,50 300,46" }, // Key (claro)
+  { label: "Peso", color: "#22D3EE", pts: "0,42 43,40 86,44 129,37 171,34 214,31 257,27 300,22" },
+  { label: "Bolívar", color: "#F45DBE", pts: "0,47 43,45 86,41 129,43 171,37 214,34 257,31 300,27" },
+  { label: "Dólar", color: "#E2C144", pts: "0,50 43,49 86,50 129,48 171,49 214,47 257,48 300,45" },
+  { label: "USDT", color: "#E6EDF3", pts: "0,53 43,51 86,53 129,50 171,51 214,49 257,50 300,46" },
 ];
 
 function group(raw: string): string {
@@ -36,15 +36,36 @@ function sanitize(input: string): string {
 }
 
 export default function Converter() {
+  const [trm, setTrm] = useState(TRM_FALLBACK);
+  const [trmInfo, setTrmInfo] = useState<{ date: string; live: boolean }>({
+    date: "2026-07-06",
+    live: false,
+  });
+
   const [from, setFrom] = useState<Code>("USD");
   const [to, setTo] = useState<Code>("COP");
   const [editField, setEditField] = useState<"from" | "to">("from");
   const [raw, setRaw] = useState("1");
   const [copied, setCopied] = useState(false);
 
+  // Jala el TRM oficial en vivo al abrir.
+  useEffect(() => {
+    let alive = true;
+    fetchTrm().then((r) => {
+      if (!alive) return;
+      setTrm(r.trm);
+      setTrmInfo({ date: r.date, live: r.live });
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const cur = useMemo(() => buildCur(trm), [trm]);
+
   const value = toNumber(raw);
-  const fromNum = editField === "from" ? value : convert(value, to, from);
-  const toNum = editField === "to" ? value : convert(value, from, to);
+  const fromNum = editField === "from" ? value : convert(value, to, from, cur);
+  const toNum = editField === "to" ? value : convert(value, from, to, cur);
 
   const fromDisplay = editField === "from" ? group(raw) : nf.format(fromNum);
   const toDisplay = editField === "to" ? group(raw) : nf.format(toNum);
@@ -96,7 +117,7 @@ export default function Converter() {
             >
               {ORDER.map((c) => (
                 <option key={c} value={c}>
-                  {CUR[c].label}
+                  {cur[c].label}
                 </option>
               ))}
             </select>
@@ -126,9 +147,11 @@ export default function Converter() {
 
       <div className="ref">
         <span>
-          <span className="ref__star">★ Dólar Cúcuta</span> · 1 USD = {nf.format(CUR.COP.perUSD)} COP
+          <span className="ref__star">★ Dólar Cúcuta</span> · 1 USD = {nf.format(cur.COP.perUSD)} COP
         </span>
-        <span className="ref__trm">TRM oficial de referencia: {nf.format(TRM)}</span>
+        <span className="ref__trm">
+          {trmInfo.live ? "🟢 en vivo · " : ""}TRM oficial {nf.format(trm)} (banrep {trmInfo.date}) + {Math.round(MARGEN * 100)}% frontera
+        </span>
       </div>
 
       <p className="tip">Toca cualquier cifra para escribirla · Toca ⧉ para copiar y pegar en tu banco</p>
